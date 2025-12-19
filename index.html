@@ -91,4 +91,230 @@
     h1 {
       color: #FF1493;
       font-size: 34px;
-      text-shadow: 2px 2px 4px rgba(255, 105, 180,
+      text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.3);
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      color: #FF69B4;
+      font-size: 20px;
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    .boxes-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      width: 100%;
+      max-width: 760px;
+      margin-top: 10px;
+    }
+
+    .box {
+      border-radius: 18px;
+      padding: 18px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .box-green { background-color: #90EE90; border: 4px solid #32CD32; }
+    .box-pink  { background-color: #FFB6C1; border: 4px solid #FF69B4; }
+    .box-yellow { background-color: #FFD700; border: 4px solid #FFA500; grid-column: 1 / -1; }
+
+    .box-label {
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .box-input {
+      width: 100%;
+      padding: 12px;
+      font-size: 34px;
+      text-align: center;
+      border: 3px solid #333;
+      border-radius: 12px;
+      font-weight: bold;
+      background: white;
+      height: 64px;
+    }
+
+    .box-input:focus {
+      outline: none;
+      border-color: #FF1493;
+      box-shadow: 0 0 15px rgba(255, 20, 147, 0.4);
+    }
+
+    .box-input:disabled {
+      background-color: #f0f0f0;
+      cursor: not-allowed;
+      color: #666;
+    }
+
+    .btn {
+      padding: 12px 35px;
+      font-size: 20px;
+      font-weight: bold;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      font-family: Arial, sans-serif;
+    }
+
+    .btn-retry {
+      background-color: #FF69B4;
+      color: white;
+      box-shadow: 0 4px 10px rgba(255, 105, 180, 0.4);
+    }
+
+    .btn-retry:hover {
+      background-color: #FF1493;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(255, 105, 180, 0.6);
+    }
+
+    .check-btn {
+      background-color: #32CD32;
+      color: white;
+      padding: 14px 50px;
+      font-size: 22px;
+      box-shadow: 0 6px 15px rgba(50, 205, 50, 0.4);
+      margin-top: 6px;
+    }
+
+    .check-btn:hover {
+      background-color: #228B22;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(50, 205, 50, 0.6);
+    }
+
+    .feedback {
+      margin-top: 10px;
+      padding: 14px 24px;
+      border-radius: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      min-height: 58px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: min(860px, 92%);
+    }
+
+    .feedback.hidden { visibility: hidden; }
+
+    .feedback.error {
+      background-color: #FFE4E1;
+      color: #DC143C;
+      border: 3px solid #DC143C;
+    }
+
+    .feedback.success {
+      background-color: #90EE90;
+      color: #006400;
+      border: 3px solid #32CD32;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="viewport">
+    <div class="stage" id="stage">
+      <div class="bg-layer">
+        <div class="candy-bg">🍭</div>
+        <div class="candy-bg">🍬</div>
+        <div class="candy-bg">🍫</div>
+        <div class="candy-bg">🧁</div>
+        <div class="candy-bg">🍰</div>
+        <div class="candy-bg">🍩</div>
+      </div>
+
+      <div class="container">
+        <h1>🍬 חִידַת חֲדַר סֻכָּרִיּוֹת הַגּוּמִי - חִידָה מִסְפָּר 3 🍭</h1>
+
+        <div class="boxes-container">
+          <div class="box box-pink">
+            <div class="box-label">הַקְּבוּצָה הַקְּטַנָּה</div>
+            <input type="number" class="box-input" id="input2" placeholder="" />
+          </div>
+
+          <div class="box box-green">
+            <div class="box-label">הַפְרֵשׁ</div>
+            <input type="text" class="box-input" id="input1" value="לֹא יָדוּעַ" disabled />
+          </div>
+
+          <div class="box box-yellow">
+            <div class="box-label">הַקְּבוּצָה הַגְּדוֹלָה</div>
+            <input type="number" class="box-input" id="input3" placeholder="" />
+          </div>
+        </div>
+
+        <button class="btn check-btn" id="checkBtn" onclick="checkAnswers()">בִּדְקוּ תְּשׁוּבָה! 🔍</button>
+
+        <div class="feedback hidden" id="feedback">
+          <span id="feedback-text"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const correctAnswers = {
+      input2: "23",
+      input3: "42"
+    };
+
+    function checkAnswers() {
+      const input2 = document.getElementById("input2").value.trim();
+      const input3 = document.getElementById("input3").value.trim();
+      const feedback = document.getElementById("feedback");
+      const feedbackText = document.getElementById("feedback-text");
+
+      if (!input2 || !input3) {
+        feedback.className = "feedback error";
+        feedbackText.textContent = "❌ מִלְאוּ אֶת כָּל הַשְּׂדוֹת בְּבַקָּשָׁה";
+        return;
+      }
+
+      if (input2 === correctAnswers.input2 && input3 === correctAnswers.input3) {
+        feedback.className = "feedback success";
+        feedbackText.textContent = "🎉 כָּל הַכָּבוֹד! לַחֲצוּ עַל הַחֵץ הָאָפֹר מִשְּׂמֹאל כְּדֵי לַעֲבֹר לַשָּׁלָב הַבָּא!";
+      } else {
+        feedback.className = "feedback error";
+        feedbackText.innerHTML = 'אוֹפְּס, זֶה עֲדַיִן לֹא נָכוֹן 😊<br><button class="btn btn-retry" onclick="retry()">נַסּוּ שׁוּב! 🍭</button>';
+      }
+    }
+
+    function retry() {
+      document.getElementById("input2").value = "";
+      document.getElementById("input3").value = "";
+      document.getElementById("feedback").className = "feedback hidden";
+      document.getElementById("input2").focus();
+    }
+
+    document.getElementById("input2").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") checkAnswers();
+    });
+    document.getElementById("input3").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") checkAnswers();
+    });
+
+    /* סקייל אוטומטי כך שתמיד יישאר 16:9 בלי גלילה */
+    function fitToScreen() {
+      const stage = document.getElementById("stage");
+      const scale = Math.min(window.innerWidth / 1280, window.innerHeight / 720);
+      stage.style.transform = "scale(" + scale + ")";
+    }
+
+    window.addEventListener("resize", fitToScreen);
+    fitToScreen();
+  </script>
+</body>
+</html>
